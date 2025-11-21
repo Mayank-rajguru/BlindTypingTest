@@ -11,9 +11,7 @@ export const Results = ({ data, config, onRetry, onHome, onLeaderboard }) => {
   const wpm = calculateWPM(chars, data.timeTaken);
 
   // script-mode metrics
-  const accuracy = config.mode === 'script'
-    ? calculateAccuracy(data.typedText, config.script.content)
-    : null;
+
 
   const wordMatch = config.mode === 'script'
     ? compareWords(data.typedText, config.script.content)
@@ -44,7 +42,6 @@ export const Results = ({ data, config, onRetry, onHome, onLeaderboard }) => {
       timestamp: Date.now(),
       mode: config.mode === 'free' ? 'Free Topic' : 'Script Copy',
       wpm,
-      accuracy: accuracy ?? 'N/A',
       characters: chars,
       timeTaken: data.timeTaken,
       prompt: config.mode === 'free' ? config.prompt : config.script.title,
@@ -80,17 +77,6 @@ export const Results = ({ data, config, onRetry, onHome, onLeaderboard }) => {
             <p className="text-5xl font-bold text-indigo-600">{wpm}</p>
           </div>
 
-          {config.mode === 'script' ? (
-            <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
-              <p className="text-gray-600 mb-2">Accuracy</p>
-              <p className="text-5xl font-bold text-green-600">{accuracy}%</p>
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
-              <p className="text-gray-600 mb-2">Time Taken</p>
-              <p className="text-5xl font-bold text-blue-600">{data.timeTaken}s</p>
-            </div>
-          )}
 
           <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
             <p className="text-gray-600 mb-2">Characters Typed</p>
